@@ -6,18 +6,20 @@ import "react-toastify/dist/ReactToastify.css";
 import "./LoginForm.css";
 import { FaUserAlt } from "react-icons/fa";
 
-const StudentForm = () => {
-  const [data, setData] = useState({
+const FormComponent = () => {
+  const [data, setFormData] = useState({
     firstname: "",
     lastname: "",
     gender: "",
   });
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+ const {name, value} = e.target;
+    setFormData ((prev) => {
+      return {...prev, [name]: value}
+    })
+  }
+  const saveStudent = (e) => {
     e.preventDefault();
     // Form Validation
     if (data.firstname.length === 0) {
@@ -40,11 +42,7 @@ const StudentForm = () => {
         .post("http://localhost:4000/api/students/addStudent", data)
         .then((res) => {
           // Handle successful response
-          setData({
-            firstname: "",
-            lastname: "",
-            gender: "",
-          });
+          setFormData(res.data);
 
           toast.success("New student successfully added", {
             position: "top-right",
@@ -63,7 +61,7 @@ const StudentForm = () => {
 
   return (
     <div className="wrapper">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={saveStudent}>
         <h1>Student Form</h1>
         <div className="input_box">
           <input
@@ -111,4 +109,4 @@ const StudentForm = () => {
   );
 };
 
-export default StudentForm;
+export default FormComponent;

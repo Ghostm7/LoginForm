@@ -1,3 +1,4 @@
+import axios from "axios";
 import React , { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,6 +35,26 @@ const RegForm = () => {
                 autoClose: 3000,
             });
         } else {
+            axios.post ("http://localhost:4000/api/Reg/addReg", data)
+            .then((res) => {
+                // Handle successful response
+                setData({
+                    regName: '',
+                    RegEmail: '',
+                    regPassword: ''
+                })
+                toast.success("Registration successful", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 3000,
+                });
+            })
+            .catch((err) => {
+                // Handle error response
+                toast.error(err.response.data.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 3000,
+                });
+            });
 
     }}
 
