@@ -2,6 +2,7 @@ import axios from "axios";
 import React , { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaUserAlt } from "react-icons/fa";
 const RegForm = () => {
     const [data, setData] = useState({
         regName: '',
@@ -59,28 +60,52 @@ const RegForm = () => {
     }}
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div className="w-25 p-3 mx-auto">
-                    <div className="form-group">
-                        <label className="mb-1">Name</label>
-                        <input type="text" className="form-control" name="name" value={data.name} onChange={handleChange}/><br/>
-                    </div>
-                    <div className="form-group">
-                        <label className="mb-1">Email</label>
-                        <input type="email" className="form-control" name="email" value={data.email} onChange={handleChange}/><br/>
-                    </div>
-                    <div className="form-group">
-                        <label className="mb-1">Password</label>
-                        <input type="password" className="form-control" name="password" value={data.password} onChange={handleChange}/><br/>
-                    </div>
-                    <div className="form-check mt-3 text-center">
-                        <button type="submit" className="btn btn-primary justify-content-center">Register</button>
-                        <ToastContainer/>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <div className="wrapper">
+        <form onSubmit={handleSubmit}>
+          <h1>Registration Form</h1>
+          <div className="input_box">
+            <input
+              type="text"
+              placeholder="Name"
+              name="RegName"
+              value={data.RegName}
+              onChange={handleChange}
+              required
+            />
+            <FaUserAlt className="icon" />
+          </div>
+          <div className="input_box">
+            <input
+              type="email"
+              placeholder="Email"
+              name="RegEmail"
+              value={data.regEmail}
+              onChange={handleChange}
+              required
+            />
+            <FaUserAlt className="icon" />
+          </div>
+          <div className="input_box">
+            <input
+              type="password"
+              placeholder="Password"
+              name="RegPassword"
+              value={data.RegPassword}
+              onChange={handleChange}
+              required
+            />
+            <FaUserAlt className="icon" />
+          </div>
+  
+         
+  
+          <button type="submit">Register</button>
+  
+          <ToastContainer />
+  
+          
+        </form>
+      </div>
     );
 }
 

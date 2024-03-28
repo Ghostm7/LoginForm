@@ -1,9 +1,11 @@
 import React , { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+
 const CourseForm = () => {
     const [data, setData] = useState({
-        name: '',
+        courseName: '',
     });
 
     const handleChange = (e) => {
@@ -16,29 +18,50 @@ const CourseForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Form Validation
-        if (data.name.length === 0) {
-            toast.error("Name field cannot be empty", {
-                position: toast.POSITION.TOP_RIGHT,
+        if (data.courseName.length === 0) {
+            toast.error("Course name field cannot be empty", {
+                position: "top-right",
                 autoClose: 3000,
             });
         } else {
-
+            axios.post("http://localhost:4000/api/courses/addCourse", data)
+            .then(res => {
+                setData(res.data);
+    
+                toast.success("New course successfully added", {
+                    position: "top-right",
+                    autoClose: 3000,
+                })
+            }).catch (err => {
+                console.log(err)
+        })  
     }}
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div className="w-25 p-3 mx-auto">
-                    <div className="form-group">
-                        <label className="mb-1">Course Name</label>
-                        <input type="text" className="form-control" name="name" value={data.name} onChange={handleChange}/><br/>
-                    </div>
-                    <div className="form-check mt-3 text-center">
-                        <button type="submit" className="btn btn-primary justify-content-center">Enter Course</button>
-                        <ToastContainer/>
-                    </div>
-                </div>
-            </form>
+        <div className="wrapper">
+           <form onSubmit={handleSubmit}>
+        <h1>Course Form</h1>
+        <div className="input_box">
+          <input
+            type="text"
+            placeholder="Course"
+            name="courseName"
+            value={data.courseName}
+            onChange={handleChange}
+            required
+          />
+         
+        </div>
+       
+
+       
+
+        <button type="submit">Enter Course</button>
+
+        <ToastContainer />
+
+        
+      </form>
         </div>
     );
 }

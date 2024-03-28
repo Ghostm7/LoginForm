@@ -127,5 +127,7 @@
 .links a:hover {
   background-color: #555;
 }
-
+.home{
+  text-align: center;
+}
 
